@@ -86,6 +86,13 @@ es_determinante(una, femenino, singular).
 es_determinante(unos, masculino, plural).
 es_determinante(unas, femenino, plural).
 
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hola").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hi").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hey").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenos dias").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas tardes").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas noches").
+
 oracion --> sintagma_nominal(N), sintagma_verbal(N).
 oracion --> adverbio(_, _).
 
