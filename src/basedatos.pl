@@ -18,15 +18,15 @@ causas(2, ["No esta conectada a alimentacion electrica.",
            "No tiene instalados los drivers correctos.",
            "No tiene tinta."]).
 
-causas(3, ["El mouse tiene suciedad en el sensor optico",
-           "El USB del mouse no esta conectado al dispositivo",
-           "El mouse ya no tiene bateria",
-           "El mouse no se ha conectado por bluetooth"]).
+causas(3, ["El mouse tiene suciedad en el sensor optico.",
+           "El USB del mouse no esta conectado al dispositivo.",
+           "El mouse ya no tiene bateria.",
+           "El mouse no se ha conectado por bluetooth."]).
 
-causas(4, ["Su teclado no esta conectado al dispositivo",
-           "El USB de su teclado no esta conectado a su dispositivo",
-           "No ha conectado por bluetooth su teclado todavia",
-           "Su teclado esta sucio"]).
+causas(4, ["Su teclado no esta conectado al dispositivo.",
+           "El USB de su teclado no esta conectado a su dispositivo.",
+           "No ha conectado por bluetooth su teclado todavia.",
+           "Su teclado esta sucio."]).
 
 preguntas(2, ["Ya reviso que tenga alimentacion electrica?",
               "Su impresora tiene conexion WiFi?",
@@ -34,7 +34,7 @@ preguntas(2, ["Ya reviso que tenga alimentacion electrica?",
               "Es primera vez que utiliza su computador con esta impresora?",
               "Ya instalo los drivers de su impresora?"]).
 
-preguntas(3, ["El sensor optico del mouse esta sucio?",
+preguntas(3, ["El sensor optico del mouse esta limpio?",
               "El USB del mouse esta conectado al dispositivo?",
               "El mouse tiene bateria con carga?",
               "Ya conecto el mouse por bluetooth al dispositivo?"]).
@@ -51,11 +51,11 @@ soluciones(2, ["Compruebe que la impresora este conectada a algun tomacorriente.
                "Proceda a instalarlos y pruebe de nuevo."]).
 
 soluciones(3, ["Limpie el sensor optico del mouse y evite usarlo en superficies sucias.",
-               "Conecte el USB del mouse al dispositivo, si es la primera vez que lo hace deje que se instalen los drivers o instalelos manualmente.",
+               "Conecte el USB del mouse al dispositivo.",
                "Cambiele las baterias al mouse, asegurese de que sean del tipo requerido.",
                "Conecte su mouse por bluetooth al dispositivo deseado."]).
 
-soluciones(4, ["Conecte su teclado al dispositivo",
-               "Asegurese de identificar el USB de su teclado y conectelo al dispositivo",
-               "Conecte por bluetooth el telcado al su dispositivo",
-               "Retire las keycaps de su teclado y limpielo con cuidado"]).
+soluciones(4, ["Conecte su teclado al dispositivo.",
+               "Asegurese de identificar el USB de su teclado y conectelo al dispositivo.",
+               "Conecte por bluetooth el telcado al su dispositivo.",
+               "Retire las keycaps de su teclado y limpielo con cuidado."]).

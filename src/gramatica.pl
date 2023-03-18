@@ -53,6 +53,7 @@ es_adjetivo(conectadas, masculino, plural).
 verbo(N) --> [P], {es_verbo(P, N)}.
 es_verbo(funciona, singular).
 es_verbo(funcionan, plural).
+es_verbo(funcionando, _).
 es_verbo(estoy, singular).
 es_verbo(esta, singular).
 es_verbo(estan, plural).
@@ -184,6 +185,7 @@ sintagma_verbal(N) --> verbo(N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N), conjuncion, adjetivo(_, N).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N).
+sintagma_verbal(N) --> adverbio(_, N), verbo(N), verbo(N).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N), adjetivo(_, N).
 sintagma_verbal(N) --> verbo(N), sintagma_nominal(_).
 sintagma_verbal(N) --> verbo(N), sintagma_nominal(_), preposiciones, verbo(N).
