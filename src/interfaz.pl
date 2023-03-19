@@ -24,7 +24,9 @@ usuario_solo_saluda(Frase):-
     not(indica_problema(Frase)), !,
     responder_sin_saludo.
 
-indica_problema(Oracion) :- conozco(P, _), sub_atom(Oracion, _, _, _, P).
+indica_problema(Oracion) :- 
+    conozco(P, _), 
+    sub_atom(Oracion, _, _, _, P).
 
 responder_saludo:- 
     write("CallCenterLog:     Hola! En que lo puedo ayudar?\n").
@@ -34,58 +36,104 @@ responder_sin_saludo:-
 
 centerlog:- 
     write("Usuario:           "),
-    readln(Oracion,_,_,_,lowercase),
-    phrase(oracion, Oracion), 
-    soy_experto_en(Palabra, Oracion), !, 
-    conozco(Palabra, Numero),
-    preguntas(Numero, ListaPreguntas),
-    soluciones(Numero, ListaSoluciones),
-    hacer_preguntas(ListaPreguntas, ListaSoluciones),
-    write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    downcase_atom(Entrada, Frase),
-    despedida(Frase), !,
-    write("CallCenterLog:     Estoy para servirle, hasta pronto").
+    downcase_atom(Entrada, EntradaEnMinusculas),
+    asserta(entrada_usuario(EntradaEnMinusculas)),
+    not(usuario_pregunta(EntradaEnMinusculas)), !,
+    centerlog_aux.
 
 centerlog:- 
-    write("CallCenterLog:     No entiendo\n"), !, 
-    centerlog.
+    centerlog_aux2.
 
-centerlog2:- 
+centerlog2:-
+    entrada_usuario(EntradaUsuario),
+    not(usuario_pregunta(EntradaUsuario)), !,
+    centerlog_aux.
+
+centerlog2:-
+    centerlog_aux2.
+
+centerlog_aux:- 
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
-    soy_experto_en(Palabra, Oracion), !,
+    soy_experto_en(Palabra, Oracion),
     quitar_comillas(Palabra, P),
     conozco(P, Numero),
     preguntas(Numero, ListaPreguntas),
     soluciones(Numero, ListaSoluciones),
-    hacer_preguntas(ListaPreguntas, ListaSoluciones),
+    diagnostico(ListaPreguntas, ListaSoluciones), !,
+    finallog.
+
+centerlog_aux:- 
+    nlp_error,
+    centerlog.
+
+centerlog_aux2:-
+    entrada_usuario(EntradaUsuario),
+    split_string(EntradaUsuario, " ", "", Oracion),
+    soy_experto_en(Palabra, Oracion),
+    quitar_comillas(Palabra, P),
+    conozco(P, Numero),
+    causas(Numero, ListaCausas),
+    motivos(ListaCausas), !,
+    finallog.
+
+centerlog_aux2:-
+    nlp_error,
+    centerlog.
+
+finallog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
     downcase_atom(Entrada, Frase),
     despedida(Frase), !,
-    write("CallCenterLog:     Estoy para servirle, hasta pronto").
+    write("CallCenterLog:     Estoy para servirle, hasta pronto.").
 
-centerlog2:- 
-    write("CallCenterLog:     No entiendo2\n"), !, centerlog.
+finallog:-
+    nlp_error,
+    finallog.
+
+nlp_error:-
+    write("CallCenterLog:     Perdon, no le entiendo.\n").
+
+usuario_pregunta(Frase):-
+    pregunta(Frase),
+    causa(Frase),
+    indica_problema(Frase), !.
+
+usuario_pregunta(Frase):-
+    causa(Frase),
+    indica_problema(Frase), !.
 
 soy_experto_en(Palabra, [Palabra|_]):- quitar_comillas(Palabra, P), es_sustantivo(P,_,_), conozco(P,_).
 soy_experto_en(Palabra, [Palabra|_]):- quitar_comillas(Palabra, P), es_verbo(P,_), conozco(P,_).
 soy_experto_en(Palabra, [_|Resto]):- soy_experto_en(Palabra, Resto).
 
-hacer_preguntas([], []):- 
+diagnostico([], []):- 
     write("CallCenterLog:     Se recomienda ver el problema mas en detalle con un tecnico o profesional\n"), !.
 
-hacer_preguntas([P|R1], [_|R2]):- 
+diagnostico([P|R1], [_|R2]):- 
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
     downcase_atom(Entrada, Frase),
     afirmacion(Frase), !,
-    hacer_preguntas(R1,R2).
+    diagnostico(R1,R2).
 
-hacer_preguntas(_, [S|_]):- 
+diagnostico(_, [S|_]):- 
     write("CallCenterLog:     "), write(S), write("\n"), !.
+
+motivos(Causas):-
+    write("CallCenterLog:     Existen varias causas, las mas comunes son:\n"),
+    escribir_motivos(Causas).
+
+escribir_motivos(Lista):- escribir_motivos_aux(Lista, 1).
+
+escribir_motivos_aux([], _).
+escribir_motivos_aux([Elem|Resto], Indice) :-
+    write("                   "), write(Indice), write('. '), write(Elem), nl,
+    NuevoIndice is Indice + 1,
+    escribir_motivos_aux(Resto, NuevoIndice).
 
 quitar_comillas(String, Resultado) :- 
     sub_atom(String, 0, _, 0, Subcadena),
