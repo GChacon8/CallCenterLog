@@ -102,6 +102,10 @@ usuario_pregunta(Frase):-
     indica_problema(Frase), !.
 
 usuario_pregunta(Frase):-
+    pregunta(Frase),
+    indica_problema(Frase), !.
+
+usuario_pregunta(Frase):-
     causa(Frase),
     indica_problema(Frase), !.
 
