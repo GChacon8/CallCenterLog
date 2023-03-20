@@ -6,7 +6,8 @@
 callcenterlog:- 
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    downcase_atom(Entrada, EntradaEnMinusculas),
+    quitar_punto(Entrada, EntradaSinPunto),
+    downcase_atom(EntradaSinPunto, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
     usuario_solo_saluda(EntradaEnMinusculas), !,
     centerlog.
@@ -37,7 +38,8 @@ responder_sin_saludo:-
 centerlog:- 
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    downcase_atom(Entrada, EntradaEnMinusculas),
+    quitar_punto(Entrada, EntradaSinPunto),
+    downcase_atom(EntradaSinPunto, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
     not(usuario_pregunta(EntradaEnMinusculas)), !,
     centerlog_aux.
@@ -85,9 +87,11 @@ centerlog_aux2:-
 finallog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    downcase_atom(Entrada, Frase),
+    quitar_punto(Entrada, EntradaSinPunto),
+    downcase_atom(EntradaSinPunto, Frase),
     despedida(Frase), !,
-    write("CallCenterLog:     Estoy para servirle, hasta pronto.").
+    write("CallCenterLog:     Estoy para servirle, hasta pronto."),
+    retractall(entrada_usuario(_)).
 
 finallog:-
     nlp_error,
@@ -117,16 +121,25 @@ diagnostico([], []):-
     write("CallCenterLog:     Se recomienda ver el problema mas en detalle con un tecnico o profesional\n"), !.
 
 diagnostico([P|R1], [_|R2]):- 
+    retractall(entrada_usuario(_)),
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    downcase_atom(Entrada, Frase),
+    quitar_punto(Entrada, EntradaSinPunto),
+    downcase_atom(EntradaSinPunto, Frase),
+    asserta(entrada_usuario(Frase)),
     afirmacion(Frase), !,
     diagnostico(R1,R2).
 
 diagnostico(_, [S|_]):- 
-    write("CallCenterLog:     "), write(S), write("\n"), !.
+    entrada_usuario(Frase),
+    negacion(Frase), !,
+    write("CallCenterLog:     "), write(S), write("\n").
 
+diagnostico(L1, L2):-
+    nlp_error,
+    diagnostico(L1,L2).
+    
 motivos(Causas):-
     write("CallCenterLog:     Existen varias causas, las mas comunes son:\n"),
     escribir_motivos(Causas).
@@ -134,11 +147,17 @@ motivos(Causas):-
 escribir_motivos(Lista):- escribir_motivos_aux(Lista, 1).
 
 escribir_motivos_aux([], _).
-escribir_motivos_aux([Elem|Resto], Indice) :-
+escribir_motivos_aux([Elem|Resto], Indice):-
     write("                   "), write(Indice), write('. '), write(Elem), nl,
     NuevoIndice is Indice + 1,
     escribir_motivos_aux(Resto, NuevoIndice).
 
-quitar_comillas(String, Resultado) :- 
+quitar_comillas(String, Resultado):- 
     sub_atom(String, 0, _, 0, Subcadena),
     atom_string(Resultado, Subcadena).
+
+quitar_punto(String, Resultado):-
+    sub_atom(String, _, 1, 0, Punto),
+    Punto == '.', !,
+    sub_atom(String, 0, _, 1, Resultado).
+quitar_punto(String, String).

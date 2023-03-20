@@ -154,14 +154,25 @@ saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas tardes").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas noches").
 
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si claro").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "afirmativo").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "asi es").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "obvio").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si claramente").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claro").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claramente").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro si").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que si").
+
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "nop").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "negativo").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "creo que no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "parece que no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que no").
 
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cual").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuales").
@@ -202,6 +213,7 @@ causa(Oracion) :- sub_atom(Oracion, _, _, _, "principio").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "principios").
 
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "muchas gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "adios").
