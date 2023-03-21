@@ -91,6 +91,11 @@ es_sustantivo(problema, masculino, singular).
 es_sustantivo(problemas, masculino, plural).
 es_sustantivo(libro, masculino, singular).
 es_sustantivo(libros, masculino, plural).
+es_sustantivo(gato, masculino, singular).
+es_sustantivo(gatos, masculino, plural).
+es_sustantivo(perro, masculino, singular).
+es_sustantivo(perros, masculino, plural).
+
 
 % Determinantes
 determinante(G, N) --> [P], {es_determinante(P, G, N)}.
@@ -152,6 +157,17 @@ saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hey").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenos dias").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas tardes").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas noches").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hello").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "holi").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "disculpe").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "con permiso").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "permiso").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "aye").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "que tal").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "que tal?").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "todo bien?").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "todo bien").
 
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
@@ -165,6 +181,10 @@ afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claro").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claramente").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro si").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que si").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "aja").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "mjm").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "mhm").
+afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "me parece que si").
 
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "nop").
@@ -173,6 +193,11 @@ negacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "creo que no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "parece que no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no se").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no estoy seguro").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "quizas").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "quiza").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "puede ser").
 
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cual").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuales").
