@@ -113,12 +113,10 @@ centerlog2:-
 
 /*
 Nombre: centerlog_aux
-Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impresora no funciona"
-             en este caso al reconocer la palabra impresora, se consulta a la base de datos
-             por preguntas y soluciones que sean utiles para diagnosticar el problema que
-             presenta el usuario
+Descripcion: El usuario pudo haber pedido por referencias, por ejemplo "Dame referencias de impresora",
+             en este caso al reconocer la palabra "referencias", se consulta a la base de datos por las
+             mismas relacionadas con "impresora" para indicarcelas al usuario
 */
-
 centerlog_aux:-
     entrada_usuario(EntradaUsuario),
     usuario_pide_referencia(EntradaUsuario),
@@ -127,13 +125,13 @@ centerlog_aux:-
     quitar_comillas(Palabra, P),
     conozco(P, Numero),
     referencias(Numero, ListaReferencias),
-    enlaces(ListaReferencias),
+    dame_referencias(ListaReferencias),
     finallog.
 
 /*
 Nombre: centerlog_aux
 Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impresora no funciona"
-             en este caso al reconocer la palabra impresora, se consulta a la base de datos
+             en este caso al reconocer la palabra "impresora", se consulta a la base de datos
              por preguntas y soluciones que sean utiles para diagnosticar el problema que
              presenta el usuario
 */
@@ -162,7 +160,7 @@ centerlog_aux:-
 Nombre: centerlog_aux2
 Descripcion: El usuario pudo haber hecho una pregunta o pedir por posibles causas de un problema,
              por ejemplo "Por que mi impresora no funciona?" en este caso al reconocer que se hace
-             una pregunta o se pide por causas y reconocer la palabra impresora, se consulta a la
+             una pregunta o se pide por causas y reconocer la palabra "impresora", se consulta a la
              base de datos por dichas causas para indicarcelas al usuario
 
             Existen varias causas, las mas comunes son:
@@ -315,10 +313,6 @@ motivos(Causas):-
     write("CallCenterLog:     Existen varias causas, las mas comunes son:\n"),
     escribir_motivos(Causas).
 
-enlaces(Referencias):-
-    write("CallCenterLog:     Se ofrecen las siguientes referencias relacionadas:\n"),
-    escribir_referencias(Referencias).
-
 /*
 Nombre: escribir_motivos
 Descripcion: Escribe en una nueva linea cada uno de los elementos de la lista
@@ -335,6 +329,25 @@ escribir_motivos_aux([Elem|Resto], Indice):-
     NuevoIndice is Indice + 1,
     escribir_motivos_aux(Resto, NuevoIndice).
 
+/*
+Nombre: dame_referencias
+Descripcion: Se encarga de escribir todas las causas posibles de un problema en particular,
+             para ello llama a la clausula escribir_motivos
+
+dame_referencias(Referencias)
+    *Referencias: Lista con referencias de problemas que puede presentar un objeto o periferio
+*/
+dame_referencias(Referencias):-
+    write("CallCenterLog:     Se ofrecen las siguientes referencias relacionadas:\n"),
+    escribir_referencias(Referencias).
+
+/*
+Nombre: escribir_referencias
+Descripcion: Escribe en una nueva linea cada uno de los elementos de la lista
+
+escribir_referencias(Lista)
+    *Lista: Lista con referencias de problemas que puede presentar un objeto o periferio
+*/
 escribir_referencias(Lista):- escribir_referencias_aux(Lista, 1).
 
 escribir_referencias_aux([], _).
