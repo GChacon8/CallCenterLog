@@ -5,10 +5,10 @@
 
 /*
 Nombre: callcenterlog
-Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primero que ingresa 
+Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primero que ingresa
              el usuario es un saludo convencional y de ser asi, llama a la clausula centerlog
 */
-callcenterlog:- 
+callcenterlog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
     quitar_punto(Entrada, EntradaSinPunto),
@@ -22,24 +22,24 @@ Nombre: callcenterlog
 Descripcion: Si el usuario no saluda sino que de una vez indica su problema o pregunta algo,
              se llama a la clausula centerlog2
 */
-callcenterlog:- 
+callcenterlog:-
     centerlog2.
 
 /*
 Nombre: usuario_solo_saluda
-Descripcion: Verifica que lo primero que ingresa el usuario al iniciar el programa sea solo un 
+Descripcion: Verifica que lo primero que ingresa el usuario al iniciar el programa sea solo un
              saludo, es decir, que no indica ningun problema
 
 usuario_solo_saluda(Frase)
     *Frase: Oracion o Frase que ingresa el usuario
 */
-usuario_solo_saluda(Frase):- 
-    saludo(Frase), 
+usuario_solo_saluda(Frase):-
+    saludo(Frase),
     not(indica_problema(Frase)), !,
     responder_saludo.
 
-usuario_solo_saluda(Frase):- 
-    not(saludo(Frase)), 
+usuario_solo_saluda(Frase):-
+    not(saludo(Frase)),
     not(indica_problema(Frase)), !,
     responder_sin_saludo.
 
@@ -50,31 +50,31 @@ Descripcion: Reconoce si en la oracion el usuario menciona algo con lo que es ex
 indica_problema(Oracion)
     *Oracion: Oracion o Frase que ingresa el usuario
 */
-indica_problema(Oracion) :- 
-    conozco(P, _), 
+indica_problema(Oracion) :-
+    conozco(P, _),
     sub_atom(Oracion, _, _, _, P).
 
 /*
 Nombre: responder_saludo
 Descripcion: Imprime "Hola! En que lo puedo ayudar?"
 */
-responder_saludo:- 
+responder_saludo:-
     write("CallCenterLog:     Hola! En que lo puedo ayudar?\n").
 
 /*
 Nombre: responder_sin_saludo
 Descripcion: Imprime "En que lo puedo ayudar?"
 */
-responder_sin_saludo:- 
+responder_sin_saludo:-
     write("CallCenterLog:     En que lo puedo ayudar?\n").
 
 /*
 Nombre: centerlog
 Descripcion: Almacena la entrada del usuario y valida que el mismo no haya hecho una
-             pregunta o pida por causas de un problema. Si lo anterior se cumple, se 
+             pregunta o pida por causas de un problema. Si lo anterior se cumple, se
              llama a la clausula centerlog_aux
 */
-centerlog:- 
+centerlog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
     quitar_punto(Entrada, EntradaSinPunto),
@@ -86,15 +86,15 @@ centerlog:-
 /*
 Nombre: centerlog
 Descripcion: Si la entrada del usuario contiene alguna pregunta o pide por posibles
-             causas de un problema, se llama a la clausula centerlog_aux2 
+             causas de un problema, se llama a la clausula centerlog_aux2
 */
-centerlog:- 
+centerlog:-
     centerlog_aux2.
 
 /*
 Nombre: centerlog2
 Descripcion: Aqui el usuario pudo o no haber saludado al inicio del programa, por eso
-             se valida que el mismo no haya hecho una pregunta o pida por causas de un 
+             se valida que el mismo no haya hecho una pregunta o pida por causas de un
              problema. Si lo anterior se cumple, se llama a la clausula centerlog_aux
 */
 centerlog2:-
@@ -106,7 +106,7 @@ centerlog2:-
 Nombre: centerlog2
 Descripcion: Aqui el usuario pudo o no haber saludado al inicio del programa, por eso se
              valida si la entrada del usuario contiene alguna pregunta o pide por posibles
-             causas de un problema, de ser asi se llama a la clausula centerlog_aux2 
+             causas de un problema, de ser asi se llama a la clausula centerlog_aux2
 */
 centerlog2:-
     centerlog_aux2.
@@ -118,7 +118,7 @@ Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impres
              por preguntas y soluciones que sean utiles para diagnosticar el problema que
              presenta el usuario
 */
-centerlog_aux:- 
+centerlog_aux:-
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
     soy_experto_en(Palabra, Oracion),
@@ -126,15 +126,16 @@ centerlog_aux:-
     conozco(P, Numero),
     preguntas(Numero, ListaPreguntas),
     soluciones(Numero, ListaSoluciones),
-    diagnostico(ListaPreguntas, ListaSoluciones), !,
+    referencias(Numero, ListaReferencias),
+    diagnostico(ListaPreguntas, ListaSoluciones, ListaReferencias), !,
     finallog.
 
 /*
 Nombre: centerlog_aux
-Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje 
+Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje
              que dice "Perdon, no le entiendo." y se vuelve a llamar a la clausula centerlog
 */
-centerlog_aux:- 
+centerlog_aux:-
     nlp_error,
     centerlog.
 
@@ -163,7 +164,7 @@ centerlog_aux2:-
 
 /*
 Nombre: centerlog_aux2
-Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje 
+Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje
              que dice "Perdon, no le entiendo." y se vuelve a llamar a la clausula centerlog
 */
 centerlog_aux2:-
@@ -186,7 +187,7 @@ finallog:-
 
 /*
 Nombre: finallog
-Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje 
+Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje
              que dice "Perdon, no le entiendo." y se vuelve a llamar a la clausula finallog
 */
 finallog:-
@@ -195,7 +196,7 @@ finallog:-
 
 /**
 Nombre: nlp_error
-Descripcion: Imprime un mensaje de error "Perdon, no le entiendo."   
+Descripcion: Imprime un mensaje de error "Perdon, no le entiendo."
 */
 nlp_error:-
     write("CallCenterLog:     Perdon, no le entiendo.\n").
@@ -222,24 +223,24 @@ usuario_pregunta(Frase):-
 
 /*
 Nombre: soy_experto_en
-Descripcion: Reconoce palabras con las que el programa relaciona causas, preguntas y 
+Descripcion: Reconoce palabras con las que el programa relaciona causas, preguntas y
              soluciones, por ejemplo: "impresora", "mouse", "computadora"
 
 soy_experto_en(Palabra, [Palabra|_])
     *Palabra: Palabra clave
     *[Palabra|_]: Primer palabra de una lista
 */
-soy_experto_en(Palabra, [Palabra|_]):- 
-    quitar_comillas(Palabra, P), 
-    es_sustantivo(P,_,_), 
+soy_experto_en(Palabra, [Palabra|_]):-
+    quitar_comillas(Palabra, P),
+    es_sustantivo(P,_,_),
     conozco(P,_).
 
-soy_experto_en(Palabra, [Palabra|_]):- 
-    quitar_comillas(Palabra, P), 
-    es_verbo(P,_), 
+soy_experto_en(Palabra, [Palabra|_]):-
+    quitar_comillas(Palabra, P),
+    es_verbo(P,_),
     conozco(P,_).
 
-soy_experto_en(Palabra, [_|Resto]):- 
+soy_experto_en(Palabra, [_|Resto]):-
     soy_experto_en(Palabra, Resto).
 
 /*
@@ -247,16 +248,16 @@ Nombre: diagnostico
 Descripcion: Se encarga de ir haciendo preguntas para diagnosticar el problema que menciona
              el usuario. Si la respuesta es afirmativa, se pasa a la siguiente pregunta. Si
              es negativa, se da la solución para dicha pregunta. Si ya no quedan mas preguntas
-             se le sugiere al usuario que vea el problema con un tecnico o profesional de campo 
+             se le sugiere al usuario que vea el problema con un tecnico o profesional de campo
 
 diagnostico(L1, L2)
     *L1: Lista de preguntas
     *L2: Lista de soluciones
 */
-diagnostico([], []):- 
+diagnostico([], []):-
     write("CallCenterLog:     Se recomienda ver el problema mas en detalle con un tecnico o profesional\n"), !.
 
-diagnostico([P|R1], [_|R2]):- 
+diagnostico([P|R1], [_|R2], [_|R3]):-
     retractall(entrada_usuario(_)),
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
@@ -265,12 +266,12 @@ diagnostico([P|R1], [_|R2]):-
     downcase_atom(EntradaSinPunto, Frase),
     asserta(entrada_usuario(Frase)),
     afirmacion(Frase), !,
-    diagnostico(R1,R2).
+    diagnostico(R1,R2,R3).
 
-diagnostico(_, [S|_]):- 
+diagnostico(_, [S|_], [R|_]):-
     entrada_usuario(Frase),
     negacion(Frase), !,
-    write("CallCenterLog:     "), write(S), write("\n").
+    write("CallCenterLog:     "), write(S), write("\t"), write(R), write("\n").
 
 diagnostico(L1, L2):-
     nlp_error,
@@ -283,7 +284,7 @@ Descripcion: Se encarga de escribir todas las causas posibles de un problema en 
 
 motivos(Causas)
     *Causas: Lista con las causas de un problema especifico
-*/    
+*/
 motivos(Causas):-
     write("CallCenterLog:     Existen varias causas, las mas comunes son:\n"),
     escribir_motivos(Causas).
@@ -294,7 +295,7 @@ Descripcion: Escribe en una nueva linea cada uno de los elementos de la lista
 
 escribir_motivos(Lista)
     *Lista: Lista con las causas de un problema especifico
-*/ 
+*/
 escribir_motivos(Lista):- escribir_motivos_aux(Lista, 1).
 
 escribir_motivos_aux([], _).
@@ -312,8 +313,8 @@ Descripcion: Quita las comillas de la oracion o frase que ingresa el usuario
 quitar_comillas(String, Resultado)
     *String: Oracion o palabra con comillas
     *Resultado: Oracion o palabra sin comillas
-*/ 
-quitar_comillas(String, Resultado):- 
+*/
+quitar_comillas(String, Resultado):-
     sub_atom(String, 0, _, 0, Subcadena),
     atom_string(Resultado, Subcadena).
 
@@ -325,7 +326,7 @@ Descripcion: Quita el punto final que puede existir en una oracion o frase que i
 quitar_punto(String, Resultado)
     *String: Oracion o frase con punto final
     *Resultado: Oracion o frase sin punto final
-*/ 
+*/
 quitar_punto(String, Resultado):-
     sub_atom(String, _, 1, 0, Punto),
     Punto == '.', !,

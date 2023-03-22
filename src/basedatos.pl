@@ -265,7 +265,7 @@ referencias(1, ["",
 
 referencias(2, ["",
                "Referencia para conecxion wifi: https://www.hp.com/mx-es/shop/tech-takes/como-conectar-tu-impresora-a-wifi.",
-               ".",
+               "",
                "Referencia conexion a computadora: https://www.hp.com/mx-es/shop/tech-takes/como-conectar-una-impresora-a-tu-computadora.",
                "Referencia de drivers/controladores: https://support.microsoft.com/es-es/windows/c%C3%B3mo-descargar-e-instalar-los-controladores-de-impresora-m%C3%A1s-recientes-4ff66446-a2ab-b77f-46f4-a6d3fe4bf661."]).
 
