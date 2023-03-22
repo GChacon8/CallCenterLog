@@ -15,12 +15,27 @@ es_pronombre(se, _, singular).
 es_pronombre(nos, _, plural).
 es_pronombre(mi, _, singular).
 es_pronombre(mis, _, plural).
+% Pronombres interrogativos
+es_pronombre(que, _, singular).
+es_pronombre(quien, _, singular).
+es_pronombre(quienes, _, plural).
+es_pronombre(cual, _, singular).
+es_pronombre(cuales, _, plural).
+es_pronombre(cuanto, _, singular).
+es_pronombre(cuanta, _, singular).
+es_pronombre(cuantos, _, plural).
+es_pronombre(cuantas, _, plural).
+es_pronombre(como, _, singular).
+es_pronombre(donde, _, singular).
+es_pronombre(cuando, _, singular).
+
 
 % Adverbios
 adverbio(G, N) --> [P], {es_adverbio(P, G, N)}.
 es_adverbio(si, _, _).
 es_adverbio(no, _, _).
 es_adverbio(tambien, _, _).
+es_adverbio(obvio, _, _).
 es_adverbio(claro, _, _).
 es_adverbio(claramente, _, _).
 es_adverbio(finalmente, _, singular).
@@ -47,13 +62,23 @@ es_adjetivo(encendidas, femenino, plural).
 es_adjetivo(conectado, masculino, singular).
 es_adjetivo(conectada, femenino, singular).
 es_adjetivo(conectados, masculino, plural).
-es_adjetivo(conectadas, masculino, plural).
+es_adjetivo(conectadas, femenino, plural).
+es_adjetivo(desconectado, masculino, singular).
+es_adjetivo(desconectada, femenino, singular).
+es_adjetivo(desconectados, masculino, plural).
+es_adjetivo(desconectadas, femenino, plural).
 
 % Verbos
 verbo(N) --> [P], {es_verbo(P, N)}.
 es_verbo(funciona, singular).
+es_verbo(funcione, singular).
 es_verbo(funcionan, plural).
+es_verbo(funcionen, plural).
 es_verbo(funcionando, _).
+es_verbo(es, singular).
+es_verbo(son, plural).
+es_verbo(era, singular).
+es_verbo(eran, plural).
 es_verbo(estoy, singular).
 es_verbo(esta, singular).
 es_verbo(estan, plural).
@@ -63,6 +88,19 @@ es_verbo(tiene, singular).
 es_verbo(tenemos, plural).
 es_verbo(tienen, plural).
 es_verbo(imprimir, _).
+es_verbo(veo, singular).
+es_verbo(noto, singular).
+es_verbo(ven, plural).
+es_verbo(notan, plural).
+es_verbo(parece, singular).
+es_verbo(parecen, plural).
+es_verbo(creo, singular).
+es_verbo(cree, singular).
+es_verbo(creen, plural).
+es_verbo(creemos, plural).
+es_verbo(dar, singular).
+es_verbo(dame, singular).
+es_verbo(deme, singular).
 es_verbo(leo, singular).
 es_verbo(lee, singular).
 es_verbo(leemos, plural).
@@ -83,18 +121,44 @@ es_sustantivo(mouse, masculino, singular).
 es_sustantivo(teclado, masculino, singular).
 es_sustantivo(vpn, femenino, singular).
 es_sustantivo(vpns, femenino, plural).
-es_sustantivo(profesor, masculino, singular).
-es_sustantivo(profesores, masculino, plural).
-es_sustantivo(profesora, femenino, singular).
-es_sustantivo(profesoras, femenino, plural).
+es_sustantivo(callcenterlog, _, singular).
+es_sustantivo(amigo, masculino, singular).
+es_sustantivo(amiga, femenino, singular).
+es_sustantivo(bro, masculino, singular).
 es_sustantivo(problema, masculino, singular).
 es_sustantivo(problemas, masculino, plural).
+es_sustantivo(causa, _, singular).
+es_sustantivo(causas, _, plural).
+es_sustantivo(motivo, _, singular).
+es_sustantivo(motivos, _, plural).
+es_sustantivo(caso, _, singular).
+es_sustantivo(casos, _, plural).
+es_sustantivo(origen, _, singular).
+es_sustantivo(origenes, _, plural).
+es_sustantivo(razon, _, singular).
+es_sustantivo(razones, _, plural).
+es_sustantivo(fuente, _, singular).
+es_sustantivo(fuentes, _, plural).
+es_sustantivo(justificacion, _, singular).
+es_sustantivo(justificaciones, _, plural).
+es_sustantivo(principio, _, singular).
+es_sustantivo(principios, _, plural).
+es_sustantivo(referencia, _, singular).
+es_sustantivo(referencias, _, plural).
+es_sustantivo(enlace, _, singular).
+es_sustantivo(enlaces, _, plural).
+es_sustantivo(link, _, singular).
+es_sustantivo(links, _, plural).
 es_sustantivo(libro, masculino, singular).
 es_sustantivo(libros, masculino, plural).
 es_sustantivo(gato, masculino, singular).
 es_sustantivo(gatos, masculino, plural).
 es_sustantivo(perro, masculino, singular).
 es_sustantivo(perros, masculino, plural).
+es_sustantivo(profesor, masculino, singular).
+es_sustantivo(profesores, masculino, plural).
+es_sustantivo(profesora, femenino, singular).
+es_sustantivo(profesoras, femenino, plural).
 
 % Determinantes
 determinante(G, N) --> [P], {es_determinante(P, G, N)}.
@@ -106,6 +170,19 @@ es_determinante(un, masculino, singular).
 es_determinante(una, femenino, singular).
 es_determinante(unos, masculino, plural).
 es_determinante(unas, femenino, plural).
+% demostrativos
+es_determinante(este, masculino, singular).
+es_determinante(esta, femenino, singular).
+es_determinante(ese, masculino, singular).
+es_determinante(esa, femenino, singular).
+es_determinante(aquel, masculino, singular).
+es_determinante(aquella, femenino, singular).
+es_determinante(estos, masculino, plural).
+es_determinante(estas, femenino, plural).
+es_determinante(esos, masculino, plural).
+es_determinante(esas, femenino, plural).
+es_determinante(aquellos, masculino, plural).
+es_determinante(aquellas, femenino, plural).
 
 %Preposiciones 
 preposiciones --> [].
@@ -143,6 +220,10 @@ conjuncion --> [sino].
 
 % Interjecciones
 interjeccion --> [].
+interjeccion --> [hi].
+interjeccion --> [hey].
+interjeccion --> [holi].
+interjeccion --> [hello].
 interjeccion --> [hola].
 interjeccion --> [buen].
 interjeccion --> [dia].
@@ -150,8 +231,21 @@ interjeccion --> [buenos].
 interjeccion --> [dias].
 interjeccion --> [buenas].
 interjeccion --> [tardes].
-interjeccion --> [buenas].
 interjeccion --> [noches].
+interjeccion --> [ok].
+interjeccion --> [oka].
+interjeccion --> [okey].
+interjeccion --> [oks].
+interjeccion --> [okis].
+interjeccion --> [muchas].
+interjeccion --> [muchisimas].
+interjeccion --> [listo].
+interjeccion --> [gracias].
+interjeccion --> [de].
+interjeccion --> [acuerdo].
+interjeccion --> [aja].
+interjeccion --> [mjm].
+interjeccion --> [mhm].
 
 vacio(_) --> [].
 
@@ -192,6 +286,7 @@ negacion(Oracion) :- sub_atom(Oracion, _, _, _, "negativo").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "creo que no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "parece que no").
+negacion(Oracion) :- sub_atom(Oracion, _, _, _, "me parece que no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no se").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no estoy seguro").
@@ -209,6 +304,11 @@ pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "donde").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "que").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "por que").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "quien").
+pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "quienes").
+pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuanto").
+pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuanta").
+pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuantos").
+pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuantas").
 
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causa").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causas").
@@ -235,9 +335,13 @@ enlace(Oracion) :- sub_atom(Oracion, _, _, _, "links").
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "link").
 
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "oka").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "okey").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "okis").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "muchas gracias").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "muchisimas gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "adios").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "hasta luego").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "bye").
@@ -246,6 +350,11 @@ despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo gracias").
 
 oracion --> sintagma_nominal(N), sintagma_verbal(N).
 oracion --> interjeccion.
+oracion --> interjeccion, interjeccion.
+oracion --> interjeccion, interjeccion, interjeccion.
+oracion --> interjeccion, sintagma_nominal(_).
+oracion --> interjeccion, sintagma_nominal(_), sintagma_nominal(N), sintagma_verbal(N).
+oracion --> interjeccion, sintagma_nominal(N), sintagma_verbal(N).
 oracion --> adverbio(_, _).
 oracion --> adverbio(_, _), adverbio(_, _).
 oracion --> adverbio(_, _), sintagma_nominal(N), sintagma_verbal(N).
@@ -254,15 +363,20 @@ sintagma_nominal(N) --> vacio(N).
 sintagma_nominal(N) --> pronombre(_, N).
 sintagma_nominal(N) --> sustantivo(_, N).
 sintagma_nominal(N) --> pronombre(G, N), sustantivo(G, N).
+sintagma_nominal(N) --> preposiciones, pronombre(_, N).
+sintagma_nominal(N) --> preposiciones, sustantivo(_, N).
+sintagma_nominal(N) --> preposiciones, sustantivo(_, N), preposiciones, sustantivo(_, N).
 sintagma_nominal(N) --> determinante(G, N), sustantivo(G, N).
 
 sintagma_verbal(N) --> verbo(N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N), conjuncion, adjetivo(_, N).
+sintagma_verbal(N) --> verbo(N), conjuncion, adverbio(_, N).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N), verbo(N).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N), adjetivo(_, N).
 sintagma_verbal(N) --> verbo(N), sintagma_nominal(_).
 sintagma_verbal(N) --> verbo(N), sintagma_nominal(_), preposiciones, verbo(N).
 sintagma_verbal(N) --> verbo(N), sintagma_nominal(_), preposiciones, sintagma_nominal(_).
+sintagma_verbal(N) --> verbo(N), sintagma_nominal(_), preposiciones, conjuncion, sintagma_nominal(_), adverbio(_, _), verbo(_).
 sintagma_verbal(N) --> adverbio(_, N), verbo(N), sintagma_nominal(_).

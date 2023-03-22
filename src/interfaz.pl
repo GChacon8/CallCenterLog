@@ -21,6 +21,21 @@ leer_entrada(Entrada):-
             throw(error))
     ;   read_line_to_string(user_input, Entrada).
 
+test:-
+    retractall(entrada_usuario(_)),
+    write("Usuario:           "),
+    leer_entrada(Entrada),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
+    asserta(entrada_usuario(EntradaEnMinusculas)),
+    entrada_usuario(EntradaUsuario),
+    split_string(EntradaUsuario, " ", "", Oracion),
+    quitar_comillas_lista(Oracion, PalabrasSinComillas),
+    write(PalabrasSinComillas),
+    write("\n"),
+    phrase(oracion, PalabrasSinComillas),
+    retractall(entrada_usuario(_)).
+
 /*
 Nombre: callcenterlog
 Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primero que ingresa
