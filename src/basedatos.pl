@@ -80,8 +80,7 @@ causas(3, ["El mouse tiene suciedad en el sensor optico.",
            "El mouse ya no tiene bateria.",
            "El mouse no se ha conectado por bluetooth."]).
 
-causas(4, ["Su teclado no esta conectado al dispositivo.",
-           "El USB de su teclado no esta conectado a su dispositivo.",
+causas(4, ["El USB de su teclado no esta conectado a su dispositivo.",
            "No ha conectado por bluetooth su teclado todavia.",
            "Su teclado esta sucio."]).
 
@@ -146,7 +145,6 @@ preguntas(3, ["El sensor optico del mouse esta limpio?",
               "Ya conecto el mouse por bluetooth al dispositivo?"]).
 
 preguntas(4, ["Ya conecto su teclado al dispositivo deseado?",
-              "El USB de su teclado esta conectado al dispositivo?",
               "Su teclado esta conectado por bluetooth al dispositivo?",
               "Ha limpiado su teclado recientemente?"]).
 
@@ -199,38 +197,26 @@ soluciones(1, ["Conecte su computadora al enchufe electrico.",
                "Cierre las pestanas menos importantes y cierre programas pesados. En otro caso, anadale memoria a su computadora.",
                "Borre datos en disco que no este en uso o aumente el espacio en el disco. En otro caso puede conectar un dispositivo de almacenamiento externo."]).
 
-%%https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP
-%%https://www.intelec.co.cr/COMPONENTES/DISCOS-EN-ESTADO-S%C3%93LIDO-(SSD)?page=2&
-
-
 soluciones(2, ["Compruebe que la impresora este conectada a algun tomacorriente.",
                "Valide que el WiFi de la impresora este encendido y que la misma se conecte a la red.",
                "Valide que tanto la computadora como impresora este conectada a la misma red WiFi.",
                "Valide que su computadora reconoce la impresora.",
-               "Proceda a instalarlos y pruebe de nuevo."]).
-
-%% https://support.hp.com/es-es/document/ish_2754723-2519311-16
+               "Proceda a instalar los drivers y pruebe de nuevo."]).
 
 soluciones(3, ["Limpie el sensor optico del mouse y evite usarlo en superficies sucias.",
                "Conecte el USB del mouse al dispositivo.",
                "Cambiele las baterias al mouse, asegurese de que sean del tipo requerido.",
                "Conecte su mouse por bluetooth al dispositivo deseado."]).
 
-%% https://support.microsoft.com/es-es/windows/-c%C3%B3mo-limpio-el-mouse-o-el-teclado-de-microsoft-889f667b-3909-35db-af54-5091373c6219#:~:text=Limpiar%20el%20teclado&text=Humedece%20ligeramente%20un%20pa%C3%B1o%20sin,gotee%20agua%20en%20el%20teclado.
 
-soluciones(4, ["Conecte su teclado al dispositivo.",
-               "Asegurese de identificar el USB de su teclado y conectelo al dispositivo.",
-               "Conecte por bluetooth el telcado al su dispositivo.",
+soluciones(4, ["Asegurese de identificar el USB de su teclado y conectelo al dispositivo.",
+               "Conecte por bluetooth el telcado a su dispositivo.",
                "Retire las keycaps de su teclado y limpielo con cuidado."]).
-
-%% https://support.microsoft.com/es-es/windows/-c%C3%B3mo-limpio-el-mouse-o-el-teclado-de-microsoft-889f667b-3909-35db-af54-5091373c6219#:~:text=Limpiar%20el%20teclado&text=Humedece%20ligeramente%20un%20pa%C3%B1o%20sin,gotee%20agua%20en%20el%20teclado.
 
 soluciones(6, ["Conecte sus audifonos al dispositivo.",
                "Cargue sus audifonos el tiempo suficiente previo a utilizarlos.",
                "Desactive el boton de mute o silenciado en caso de tenerlo.",
                "Asegurese de cambiar sus audifonos al output de sonido de su dispositivo."]).
-
-%% https://www.youtube.com/watch?v=vLS6K6ohEgc&ab_channel=solvetic.com
 
 soluciones(7, ["Conecte su parlante al dispositivo.",
                "Cargue su parlante el tiempo suficiente previo a utilizarlo.",
@@ -238,24 +224,15 @@ soluciones(7, ["Conecte su parlante al dispositivo.",
                "Suba el volumen de su parlante hasta que sea suficientemente alto para escucharlo.",
                "Asegurese de cambiar el output de sonido a su parlante."]).
 
-%% https://www.youtube.com/watch?v=vLS6K6ohEgc&ab_channel=solvetic.com
-
 soluciones(8, ["Conecte su monitor a la alimentacion electrica.",
                "Conecte su monitor a su computadora.",
                "Encuentre y presione el boton de encendido de su monitor.",
                "Asegurese de tener la configuracion grafica correcta."]).
 
-%% https://www.intel.la/content/www/xl/es/support/articles/000023767/graphics.html
-
 soluciones(9, ["Actualice su version de word o de office.",
                "Compre o consiga una licencia de office para usar word.",
                "Cierre los programas que no estan en uso o los menos importantes para aliviar el uso de memoria.",
                "Libere espacio en disco o compre mas espacio para su computadora."]).
-
-
-%% https://www.gollo.com/kingston-memoria-usb-dtse9-2-0-32-32gb
-%% https://www.microsoft.com/en-us/microsoft-365/business/compare-all-microsoft-365-business-products-b?&ef_id=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&OCID=AIDcmm409lj8ne_SEM_CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&lnkd=Google_O365SMB_Brand&gclid=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE
-%% https://support.microsoft.com/es-es/office/instalar-actualizaciones-de-office-2ab296f3-7f03-43a2-8e50-46de917611c5#:~:text=Abra%20cualquier%20aplicaci%C3%B3n%20de%20Office,Opciones%20de%20actualizaci%C3%B3n%20%3E%20Actualizar%20ahora.
 
 soluciones(10, ["Actualice su version de excel o de office.",
                "Compre o consiga una licencia de office para usar excel.",
@@ -279,5 +256,67 @@ soluciones(13, ["Compre alguno de los planes de internet proporcionado por las d
                "Conecte su dispositivo a la red wifi local.",
                "Acerquese a el dispositivo emisor de senal wifi o conecte un cable de red a su dispositivo."]).
 
-%%https://www.kolbi.cr/wps/portal/kolbi_dev/hogares/internet/internet-individual/1-a-100-mbps
+referencias(1, ["",
+               "",
+               "Referencia para enfriamiento: https://extremetechcr.com/tienda/23-enfriamiento",
+               "Referencia para ventiladores: https://extremetechcr.com/tienda/26-ventiladores.",
+               "Referencia para memoria: https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP.",
+               "Referencia para almacenamiento: https://extremetechcr.com/tienda/19-almacenamiento."]).
 
+referencias(2, ["",
+               "Referencia para conecxion wifi: https://www.hp.com/mx-es/shop/tech-takes/como-conectar-tu-impresora-a-wifi.",
+               ".",
+               "Referencia conexion a computadora: https://www.hp.com/mx-es/shop/tech-takes/como-conectar-una-impresora-a-tu-computadora.",
+               "Referencia de drivers/controladores: https://support.microsoft.com/es-es/windows/c%C3%B3mo-descargar-e-instalar-los-controladores-de-impresora-m%C3%A1s-recientes-4ff66446-a2ab-b77f-46f4-a6d3fe4bf661."]).
+
+referencias(3, ["Referencia para limpieza: https://support.microsoft.com/es-es/windows/-c%C3%B3mo-limpio-el-mouse-o-el-teclado-de-microsoft-889f667b-3909-35db-af54-5091373c6219#:~:text=Limpiar%20el%20teclado&text=Humedece%20ligeramente%20un%20pa%C3%B1o%20sin,gotee%20agua%20en%20el%20teclado.",
+               "",
+               "",
+               "Refenrencia conexion mouse: https://www.sony-latin.com/es/electronics/support/desktop-pc-svl-series/articles/00019317."]).
+
+referencias(4, ["",
+               "Referencia conexion inalambrica: https://www.sony-latin.com/es/electronics/support/personal-computers/articles/00019315",
+               "Referencia limpieza: https://support.microsoft.com/es-es/windows/-c%C3%B3mo-limpio-el-mouse-o-el-teclado-de-microsoft-889f667b-3909-35db-af54-5091373c6219#:~:text=Limpiar%20el%20teclado&text=Humedece%20ligeramente%20un%20pa%C3%B1o%20sin,gotee%20agua%20en%20el%20teclado"]).
+
+referencias(6, ["",
+               "",
+               "",
+               "Referencia output audio: https://www.youtube.com/watch?v=vLS6K6ohEgc&ab_channel=solvetic.com"]).
+
+referencias(7, ["Referencia de conexion: https://www.techadvisor.com/article/1404066/como-conectar-un-altavoz-bluetooth-a-un-pc-o-portatil-windows.html",
+               "",
+               "",
+               "",
+               "Referencia output audio: https://www.youtube.com/watch?v=vLS6K6ohEgc&ab_channel=solvetic.com"]).
+
+referencias(8, ["",
+               "Referencia conexion a pc: https://www.xataka.com/basics/conectar-tu-portatil-al-monitor-pc-como-hacerlo-diferencias-hdmi-usb-c-displayport",
+               "",
+               "Referencia configuracion grafica: https://www.intel.la/content/www/xl/es/support/articles/000023767/graphics.html"]).
+
+referencias(9, ["Referencia actualizar: https://support.microsoft.com/es-es/office/-c%C3%B3mo-actualizo-office-ee68f6cf-422f-464a-82ec-385f65391350",
+               "Referencia licencia office: https://www.microsoft.com/en-us/microsoft-365/business/compare-all-microsoft-365-business-products-b?&ef_id=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&OCID=AIDcmm409lj8ne_SEM_CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&lnkd=Google_O365SMB_Brand&gclid=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE",
+               "Referencia memoria: https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP",
+               "Referencia almacenamiento: https://extremetechcr.com/tienda/19-almacenamiento"]).
+
+referencias(10, ["Referencia actualizar: https://support.microsoft.com/es-es/office/-c%C3%B3mo-actualizo-office-ee68f6cf-422f-464a-82ec-385f65391350",
+               "Referencia licencia office: https://www.microsoft.com/en-us/microsoft-365/business/compare-all-microsoft-365-business-products-b?&ef_id=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&OCID=AIDcmm409lj8ne_SEM_CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&lnkd=Google_O365SMB_Brand&gclid=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE",
+               "Referencia memoria: https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP",
+               "Referencia almacenamiento: https://extremetechcr.com/tienda/19-almacenamiento",
+               "Referencia hojas de excel: https://exceltotal.com/moverse-entre-hojas-de-excel/"]).
+
+referencias(11, ["Referencia actualizar: https://support.microsoft.com/es-es/office/-c%C3%B3mo-actualizo-office-ee68f6cf-422f-464a-82ec-385f65391350",
+               "Referencia licencia office: https://www.microsoft.com/en-us/microsoft-365/business/compare-all-microsoft-365-business-products-b?&ef_id=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&OCID=AIDcmm409lj8ne_SEM_CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&lnkd=Google_O365SMB_Brand&gclid=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE",
+               "Referencia memoria: https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP",
+               "Referencia almacenamiento: https://extremetechcr.com/tienda/19-almacenamiento"]).
+
+
+referencias(12, ["Referencia actualizar: https://support.microsoft.com/es-es/office/-c%C3%B3mo-actualizo-office-ee68f6cf-422f-464a-82ec-385f65391350",
+               "Referencia licencia office: https://www.microsoft.com/en-us/microsoft-365/business/compare-all-microsoft-365-business-products-b?&ef_id=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&OCID=AIDcmm409lj8ne_SEM_CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE:G:s&lnkd=Google_O365SMB_Brand&gclid=CjwKCAjwiOCgBhAgEiwAjv5whD5PclH7VhCGNsBEf_XNXVlUnJNc5ZlYyJMR2OlD6_CLoY-2G-NVJxoCDeoQAvD_BwE",
+               "Referencia memoria: https://www.intelec.co.cr/COMPONENTES/MEMORIAS-PARA-LAPTOP",
+               "Referencia almacenamiento: https://extremetechcr.com/tienda/19-almacenamiento"]).
+
+referencias(13, ["Referencia plan de internet: https://www.kolbi.cr/wps/portal/kolbi_dev/hogares/internet/internet-individual/1-a-100-mbps",
+               "Referencia conexion router: https://www.cisco.com/c/es_mx/solutions/small-business/resource-center/networking/how-to-set-up-router.html",
+               "Referencia conexion wifi: https://support.microsoft.com/es-es/windows/conectarse-a-una-red-wi-fi-en-windows-1f881677-b569-0cd5-010d-e3cd3579d263",
+               ""]).
