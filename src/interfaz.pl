@@ -290,6 +290,11 @@ diagnostico([P|R1], [_|R2], [_|R3]):-
     afirmacion(Frase), !,
     diagnostico(R1, R2, R3).
 
+diagnostico(_, [S|_], [""|_]):-
+    entrada_usuario(Frase),
+    negacion(Frase), !,
+    write("CallCenterLog:     "), write(S), write("\n").
+
 diagnostico(_, [S|_], [R|_]):-
     entrada_usuario(Frase),
     negacion(Frase), !,
