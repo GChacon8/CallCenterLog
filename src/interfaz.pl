@@ -118,6 +118,25 @@ Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impres
              por preguntas y soluciones que sean utiles para diagnosticar el problema que
              presenta el usuario
 */
+
+centerlog_aux:-
+    entrada_usuario(EntradaUsuario),
+    usuario_pide_referencia(EntradaUsuario),
+    split_string(EntradaUsuario, " ", "", Oracion),
+    soy_experto_en(Palabra, Oracion),
+    quitar_comillas(Palabra, P),
+    conozco(P, Numero),
+    referencias(Numero, ListaReferencias),
+    enlaces(ListaReferencias),
+    finallog.
+
+/*
+Nombre: centerlog_aux
+Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impresora no funciona"
+             en este caso al reconocer la palabra impresora, se consulta a la base de datos
+             por preguntas y soluciones que sean utiles para diagnosticar el problema que
+             presenta el usuario
+*/
 centerlog_aux:-
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
@@ -221,6 +240,13 @@ usuario_pregunta(Frase):-
     causa(Frase),
     indica_problema(Frase), !.
 
+usuario_pide_referencia(Frase):-
+    enlace(Frase).
+
+usuario_pide_referencia(Frase):-
+    enlace(Frase),
+    indica_problema(Frase).
+
 /*
 Nombre: soy_experto_en
 Descripcion: Reconoce palabras con las que el programa relaciona causas, preguntas y
@@ -254,7 +280,7 @@ diagnostico(L1, L2)
     *L1: Lista de preguntas
     *L2: Lista de soluciones
 */
-diagnostico([], []):-
+diagnostico([], [], []):-
     write("CallCenterLog:     Se recomienda ver el problema mas en detalle con un tecnico o profesional\n"), !.
 
 diagnostico([P|R1], [_|R2], [_|R3]):-
@@ -273,9 +299,9 @@ diagnostico(_, [S|_], [R|_]):-
     negacion(Frase), !,
     write("CallCenterLog:     "), write(S), write("\t"), write(R), write("\n").
 
-diagnostico(L1, L2):-
+diagnostico(L1, L2, L3):-
     nlp_error,
-    diagnostico(L1,L2).
+    diagnostico(L1, L2, L3).
 
 /*
 Nombre: motivos
@@ -288,6 +314,10 @@ motivos(Causas)
 motivos(Causas):-
     write("CallCenterLog:     Existen varias causas, las mas comunes son:\n"),
     escribir_motivos(Causas).
+
+enlaces(Referencias):-
+    write("CallCenterLog:     Se ofrecen las siguientes referencias relacionadas:\n"),
+    escribir_referencias(Referencias).
 
 /*
 Nombre: escribir_motivos
@@ -304,6 +334,18 @@ escribir_motivos_aux([Elem|Resto], Indice):-
     write("                   "), write(Indice), write('. '), write(Elem), nl,
     NuevoIndice is Indice + 1,
     escribir_motivos_aux(Resto, NuevoIndice).
+
+escribir_referencias(Lista):- escribir_referencias_aux(Lista, 1).
+
+escribir_referencias_aux([], _).
+
+escribir_referencias_aux([""|Resto], Indice):-
+    escribir_referencias_aux(Resto, Indice).
+
+escribir_referencias_aux([Elem|Resto], Indice):-
+    write("                   "), write(Indice), write('. '), write(Elem), nl,
+    NuevoIndice is Indice + 1,
+    escribir_referencias_aux(Resto, NuevoIndice).
 
 /*
 Nombre: quitar_comillas

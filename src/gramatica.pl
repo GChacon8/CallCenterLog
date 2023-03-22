@@ -96,7 +96,6 @@ es_sustantivo(gatos, masculino, plural).
 es_sustantivo(perro, masculino, singular).
 es_sustantivo(perros, masculino, plural).
 
-
 % Determinantes
 determinante(G, N) --> [P], {es_determinante(P, G, N)}.
 es_determinante(el, masculino, singular).
@@ -236,6 +235,13 @@ causa(Oracion) :- sub_atom(Oracion, _, _, _, "justificacion").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "justificaciones").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "principio").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "principios").
+
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "referencia").
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "referencias").
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "enlaces").
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "enlace").
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "links").
+enlace(Oracion) :- sub_atom(Oracion, _, _, _, "link").
 
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
