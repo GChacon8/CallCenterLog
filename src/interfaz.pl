@@ -4,13 +4,31 @@
 :- dynamic entrada_usuario/1.
 
 /*
+Nombre: leer_entrada
+Descripcion: Maneja la entrada del usuario. Si el mismo antes de escribir algo cierra la 
+             ventana de SWI-Prolog, la regla verifica si el flujo de entrada ha llegado al 
+             final, de ser asi se muestra un mensaje de error para notificar al usuario que 
+             la entrada esperada no ha sido proporcionada.
+
+leer_entrada(Entrada)
+    *Entrada: Entrada del usuario
+*/
+leer_entrada(Entrada):-
+    flush_output(current_output),
+    (   at_end_of_stream ->
+            write('Entrada del usuario no proporcionada.'),
+            nl,
+            throw(error))
+    ;   read_line_to_string(user_input, Entrada).
+
+/*
 Nombre: callcenterlog
 Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primero que ingresa
              el usuario es un saludo convencional y de ser asi, llama a la clausula centerlog
 */
 callcenterlog:-
     write("Usuario:           "),
-    read_line_to_string(user_input, Entrada),
+    leer_entrada(Entrada),
     quitar_puntuacion(Entrada, EntradaSinPuntuacion),
     downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
@@ -76,7 +94,7 @@ Descripcion: Almacena la entrada del usuario y valida que el mismo no haya hecho
 */
 centerlog:-
     write("Usuario:           "),
-    read_line_to_string(user_input, Entrada),
+    leer_entrada(Entrada),
     quitar_puntuacion(Entrada, EntradaSinPuntuacion),
     downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
@@ -195,7 +213,7 @@ Descripcion: Espera que el usuario agradezca o se despida al terminar de hacerle
 */
 finallog:-
     write("Usuario:           "),
-    read_line_to_string(user_input, Entrada),
+    leer_entrada(Entrada),
     quitar_puntuacion(Entrada, EntradaSinPuntuacion),
     downcase_atom(EntradaSinPuntuacion, Frase),
     despedida(Frase), !,
@@ -269,8 +287,9 @@ soy_experto_en(Palabra, [_|Resto]):-
 Nombre: diagnostico
 Descripcion: Se encarga de ir haciendo preguntas para diagnosticar el problema que menciona
              el usuario. Si la respuesta es afirmativa, se pasa a la siguiente pregunta. Si
-             es negativa, se da la solución para dicha pregunta. Si ya no quedan mas preguntas
-             se le sugiere al usuario que vea el problema con un tecnico o profesional de campo
+             es negativa, se da la solución para dicha pregunta y si existe una referencia afin
+             con el problema. Si ya no quedan mas preguntas se le sugiere al usuario que vea 
+             el problema con un tecnico o profesional de campo
 
 diagnostico(L1, L2)
     *L1: Lista de preguntas
@@ -283,7 +302,7 @@ diagnostico([P|R1], [_|R2], [_|R3]):-
     retractall(entrada_usuario(_)),
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
-    read_line_to_string(user_input, Entrada),
+    leer_entrada(Entrada),
     quitar_puntuacion(Entrada, EntradaSinPuntuacion),
     downcase_atom(EntradaSinPuntuacion, Frase),
     asserta(entrada_usuario(Frase)),
