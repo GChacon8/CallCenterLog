@@ -11,8 +11,8 @@ Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primer
 callcenterlog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    quitar_punto(Entrada, EntradaSinPunto),
-    downcase_atom(EntradaSinPunto, EntradaEnMinusculas),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
     usuario_solo_saluda(EntradaEnMinusculas), !,
     centerlog.
@@ -77,8 +77,8 @@ Descripcion: Almacena la entrada del usuario y valida que el mismo no haya hecho
 centerlog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    quitar_punto(Entrada, EntradaSinPunto),
-    downcase_atom(EntradaSinPunto, EntradaEnMinusculas),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
     asserta(entrada_usuario(EntradaEnMinusculas)),
     not(usuario_pregunta(EntradaEnMinusculas)), !,
     centerlog_aux.
@@ -121,9 +121,9 @@ centerlog_aux:-
     entrada_usuario(EntradaUsuario),
     usuario_pide_referencia(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
-    soy_experto_en(Palabra, Oracion),
-    quitar_comillas(Palabra, P),
-    conozco(P, Numero),
+    quitar_comillas_lista(Oracion, PalabrasSinComillas),
+    soy_experto_en(Palabra, PalabrasSinComillas),
+    conozco(Palabra, Numero),
     referencias(Numero, ListaReferencias),
     dame_referencias(ListaReferencias),
     finallog.
@@ -138,9 +138,9 @@ Descripcion: El usuario pudo haber ingresado un problema, por ejemplo "Mi impres
 centerlog_aux:-
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
-    soy_experto_en(Palabra, Oracion),
-    quitar_comillas(Palabra, P),
-    conozco(P, Numero),
+    quitar_comillas_lista(Oracion, PalabrasSinComillas),
+    soy_experto_en(Palabra, PalabrasSinComillas),
+    conozco(Palabra, Numero),
     preguntas(Numero, ListaPreguntas),
     soluciones(Numero, ListaSoluciones),
     referencias(Numero, ListaReferencias),
@@ -172,9 +172,9 @@ Descripcion: El usuario pudo haber hecho una pregunta o pedir por posibles causa
 centerlog_aux2:-
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
-    soy_experto_en(Palabra, Oracion),
-    quitar_comillas(Palabra, P),
-    conozco(P, Numero),
+    quitar_comillas_lista(Oracion, PalabrasSinComillas),
+    soy_experto_en(Palabra, PalabrasSinComillas),
+    conozco(Palabra, Numero),
     causas(Numero, ListaCausas),
     motivos(ListaCausas), !,
     finallog.
@@ -196,8 +196,8 @@ Descripcion: Espera que el usuario agradezca o se despida al terminar de hacerle
 finallog:-
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    quitar_punto(Entrada, EntradaSinPunto),
-    downcase_atom(EntradaSinPunto, Frase),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, Frase),
     despedida(Frase), !,
     write("CallCenterLog:     Estoy para servirle, hasta pronto."),
     retractall(entrada_usuario(_)).
@@ -255,12 +255,10 @@ soy_experto_en(Palabra, [Palabra|_])
     *[Palabra|_]: Primer palabra de una lista
 */
 soy_experto_en(Palabra, [Palabra|_]):-
-    quitar_comillas(Palabra, P),
     es_sustantivo(P,_,_),
     conozco(P,_).
 
 soy_experto_en(Palabra, [Palabra|_]):-
-    quitar_comillas(Palabra, P),
     es_verbo(P,_),
     conozco(P,_).
 
@@ -286,11 +284,11 @@ diagnostico([P|R1], [_|R2], [_|R3]):-
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
     read_line_to_string(user_input, Entrada),
-    quitar_punto(Entrada, EntradaSinPunto),
-    downcase_atom(EntradaSinPunto, Frase),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, Frase),
     asserta(entrada_usuario(Frase)),
     afirmacion(Frase), !,
-    diagnostico(R1,R2,R3).
+    diagnostico(R1, R2, R3).
 
 diagnostico(_, [S|_], [R|_]):-
     entrada_usuario(Frase),
@@ -362,28 +360,43 @@ escribir_referencias_aux([Elem|Resto], Indice):-
 
 /*
 Nombre: quitar_comillas
-Descripcion: Quita las comillas de la oracion o frase que ingresa el usuario
-             o bien de una palabra
+Descripcion: Quita las comillas de una palabra
 
 quitar_comillas(String, Resultado)
-    *String: Oracion o palabra con comillas
-    *Resultado: Oracion o palabra sin comillas
+    *String: Palabra con comillas
+    *Resultado: Palabra sin comillas
 */
 quitar_comillas(String, Resultado):-
     sub_atom(String, 0, _, 0, Subcadena),
     atom_string(Resultado, Subcadena).
 
 /*
-Nombre: quitar_punto
-Descripcion: Quita el punto final que puede existir en una oracion o frase que ingrese
-             el usuario
+Nombre: quitar_comillas_lista
+Descripcion: Quita las comillas de todas las palabras que estan dentro de una lista
 
-quitar_punto(String, Resultado)
-    *String: Oracion o frase con punto final
-    *Resultado: Oracion o frase sin punto final
+quitar_comillas_lista(Lista, Resultado)
+    *Lista: Lista con palabras con comillas
+    *Resultado: Lista con palabras sin comillas
 */
-quitar_punto(String, Resultado):-
-    sub_atom(String, _, 1, 0, Punto),
-    Punto == '.', !,
-    sub_atom(String, 0, _, 1, Resultado).
-quitar_punto(String, String).
+quitar_comillas_lista(Lista, Resultado) :-
+    maplist(quitar_comillas, Lista, Resultado).
+
+/*
+Nombre: quitar_puntuacion
+Descripcion: Quita todos los signos de puntuacion que ingresa el usuario
+
+quitar_puntuacion(String, Resultado)
+    *String: Oracion o frase con signos de puntuacion
+    *SinPuntuacion: Oracion o frase sin signos de puntuacion
+*/
+quitar_puntuacion(String, SinPuntuacion) :-
+    string_chars(String, Chars),
+    delete(Chars, ',', SinComas),
+    delete(SinComas, ';', SinPuntoComa),
+    delete(SinPuntoComa, ':', SinDosPuntos),
+    delete(SinDosPuntos, '!', SinExclamacion),
+    delete(SinExclamacion, '?', SinInterrogacion),
+    delete(SinInterrogacion, '.', SinPunto),
+    delete(SinPunto, '¡', SinExclamacionInvertido),
+    delete(SinExclamacionInvertido, '¿', SinInterrogacionInvertido),
+    string_chars(SinPuntuacion, SinInterrogacionInvertido).

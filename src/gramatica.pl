@@ -141,18 +141,24 @@ conjuncion --> [pero].
 conjuncion --> [aunque].
 conjuncion --> [sino].
 
-% Signos de puntuacion
-puntuacion --> [].
-puntuacion --> [;].
-puntuacion --> [:].
-puntuacion --> [.].
-puntuacion --> [?].
+% Interjecciones
+interjeccion --> [].
+interjeccion --> [hola].
+interjeccion --> [buen].
+interjeccion --> [dia].
+interjeccion --> [buenos].
+interjeccion --> [dias].
+interjeccion --> [buenas].
+interjeccion --> [tardes].
+interjeccion --> [buenas].
+interjeccion --> [noches].
 
 vacio(_) --> [].
 
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hola").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hi").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hey").
+saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buen dia").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenos dias").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas tardes").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "buenas noches").
@@ -162,10 +168,7 @@ saludo(Oracion) :- sub_atom(Oracion, _, _, _, "holi").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "disculpe").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "con permiso").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "permiso").
-saludo(Oracion) :- sub_atom(Oracion, _, _, _, "aye").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "que tal").
-saludo(Oracion) :- sub_atom(Oracion, _, _, _, "que tal?").
-saludo(Oracion) :- sub_atom(Oracion, _, _, _, "todo bien?").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "todo bien").
 
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
@@ -176,8 +179,6 @@ afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "afirmativo").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "asi es").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "obvio").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si claramente").
-afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claro").
-afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si, claramente").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "seguro si").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "por supuesto que si").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "aja").
@@ -200,24 +201,14 @@ negacion(Oracion) :- sub_atom(Oracion, _, _, _, "puede ser").
 
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cual").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuales").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿cual").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿cuales").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "sabe cual").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "sabe cuales").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿sabe cual").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿sabe cuales").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "como").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿como").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuando").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿cuando").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "donde").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿donde").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "que").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿que").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "por que").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿por que").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "quien").
-pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "¿quienes").
 
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causa").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causas").
@@ -251,12 +242,13 @@ despedida(Oracion) :- sub_atom(Oracion, _, _, _, "adios").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "hasta luego").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "bye").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo").
-despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo, gracias").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo gracias").
 
-oracion --> sintagma_nominal(N), sintagma_verbal(N), puntuacion.
-oracion --> adverbio(_, _), puntuacion.
-oracion --> adverbio(_, _), adverbio(_, _), puntuacion.
-oracion --> adverbio(_, _), sintagma_nominal(N), sintagma_verbal(N), puntuacion.
+oracion --> sintagma_nominal(N), sintagma_verbal(N).
+oracion --> interjeccion.
+oracion --> adverbio(_, _).
+oracion --> adverbio(_, _), adverbio(_, _).
+oracion --> adverbio(_, _), sintagma_nominal(N), sintagma_verbal(N).
 
 sintagma_nominal(N) --> vacio(N).
 sintagma_nominal(N) --> pronombre(_, N).
