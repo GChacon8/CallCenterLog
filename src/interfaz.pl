@@ -1,33 +1,13 @@
 :-consult(gramatica).
 :-consult(basedatos).
 
-:- dynamic entrada_usuario/1.
-
-/*
-Nombre: leer_entrada
-Descripcion: Maneja la entrada del usuario. Si el mismo antes de escribir algo cierra la 
-             ventana de SWI-Prolog, la regla verifica si el flujo de entrada ha llegado al 
-             final, de ser asi se muestra un mensaje de error para notificar al usuario que 
-             la entrada esperada no ha sido proporcionada.
-
-leer_entrada(Entrada)
-    *Entrada: Entrada del usuario
-*/
-leer_entrada(Entrada):-
-    flush_output(current_output),
-    (   at_end_of_stream ->
-            write('Entrada del usuario no proporcionada.'),
-            nl,
-            throw(error))
-    ;   read_line_to_string(user_input, Entrada).
+:-dynamic entrada_usuario/1.
+:-dynamic version_estandar/1.
 
 test:-
     retractall(entrada_usuario(_)),
     write("Usuario:           "),
-    leer_entrada(Entrada),
-    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
-    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
-    asserta(entrada_usuario(EntradaEnMinusculas)),
+    leer_entrada,
     entrada_usuario(EntradaUsuario),
     split_string(EntradaUsuario, " ", "", Oracion),
     quitar_comillas_lista(Oracion, PalabrasSinComillas),
@@ -42,12 +22,13 @@ Descripcion: Funcion principal que inicializa la aplicacion, revisa si lo primer
              el usuario es un saludo convencional y de ser asi, llama a la clausula centerlog
 */
 callcenterlog:-
+    retractall(version_estandar(_)),
+    asserta(version_estandar(true)),
     write("Usuario:           "),
-    leer_entrada(Entrada),
-    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
-    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
-    asserta(entrada_usuario(EntradaEnMinusculas)),
-    usuario_solo_saluda(EntradaEnMinusculas), !,
+    leer_entrada,
+    revisar_entrada,
+    entrada_usuario(EntradaUsuario),
+    usuario_solo_saluda(EntradaUsuario), !,
     centerlog.
 
 /*
@@ -56,7 +37,84 @@ Descripcion: Si el usuario no saluda sino que de una vez indica su problema o pr
              se llama a la clausula centerlog2
 */
 callcenterlog:-
+    revisar_entrada,
     centerlog2.
+
+/*
+Nombre: callcenterlog
+Descripcion: Si el programa no entiende algo de lo que ingresa el usuario, se imprime un mensaje
+             que dice "Perdon, no le entiendo." y se vuelve a llamar a la clausula callcenterlog
+*/
+callcenterlog:-
+    nlp_error,
+    callcenterlog.
+
+/*
+Nombre: callcenterlog_pro
+Descripcion: Hace lo mismo que callcenterlog sin revisar estrictamente la estructura de la oracion,
+             sino que se enfoca mas en encontrar palabras claves de saludo, afirmacion, negacion, etc.
+*/
+callcenterlog_pro:-
+    retractall(version_estandar(_)),
+    asserta(version_estandar(false)),
+    write("Usuario:           "),
+    leer_entrada,
+    revisar_entrada,
+    entrada_usuario(EntradaUsuario),
+    usuario_solo_saluda(EntradaUsuario), !,
+    centerlog.
+
+callcenterlog_pro:-
+    revisar_entrada,
+    centerlog2.
+
+callcenterlog_pro:-
+    nlp_error,
+    callcenterlog_pro.
+
+/*
+Nombre: leer_entrada
+Descripcion: Maneja la entrada del usuario. Si el mismo antes de escribir algo cierra la 
+             ventana de SWI-Prolog, la regla verifica si el flujo de entrada ha llegado al 
+             final, de ser asi se muestra un mensaje de error para notificar al usuario que 
+             la entrada esperada no ha sido proporcionada
+             
+             A la entrada del usuario le quita todos los signos de puntuacion, lo pasa a 
+             minusculas y lo almacena 
+*/
+leer_entrada:-
+    retractall(entrada_usuario(_)),
+    flush_output(current_output),
+    (   at_end_of_stream ->
+            write('Entrada del usuario no proporcionada.'),
+            nl,
+            throw(error))
+    ;   read_line_to_string(user_input, Entrada),
+    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
+    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
+    asserta(entrada_usuario(EntradaEnMinusculas)).
+
+/*
+Nombre: revisar_entrada
+Descripcion: Si se utiliza callcenterlog, el programa funciona en la version estandar, entonces
+             se comprueba que la entrada del usuario cumpla con la estructuta de una oracion
+             definida en gramatica.pl
+*/
+revisar_entrada:-
+    clause(version_estandar(X),_),
+    X = true,
+    entrada_usuario(EntradaUsuario),
+    split_string(EntradaUsuario, " ", "", Oracion),
+    quitar_comillas_lista(Oracion, PalabrasSinComillas),
+    phrase(oracion, PalabrasSinComillas).
+
+/*
+Nombre: revisar_entrada
+Descripcion: Si se utiliza callcenterlog_pro, no es necesario validar la estructura de la oracion
+*/
+revisar_entrada:-
+    clause(version_estandar(X),_),
+    X = false.
 
 /*
 Nombre: usuario_solo_saluda
@@ -109,11 +167,10 @@ Descripcion: Almacena la entrada del usuario y valida que el mismo no haya hecho
 */
 centerlog:-
     write("Usuario:           "),
-    leer_entrada(Entrada),
-    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
-    downcase_atom(EntradaSinPuntuacion, EntradaEnMinusculas),
-    asserta(entrada_usuario(EntradaEnMinusculas)),
-    not(usuario_pregunta(EntradaEnMinusculas)), !,
+    leer_entrada,
+    revisar_entrada,
+    entrada_usuario(EntradaUsuario),
+    not(usuario_pregunta(EntradaUsuario)), !,
     centerlog_aux.
 
 /*
@@ -122,7 +179,12 @@ Descripcion: Si la entrada del usuario contiene alguna pregunta o pide por posib
              causas de un problema, se llama a la clausula centerlog_aux2
 */
 centerlog:-
+    revisar_entrada,
     centerlog_aux2.
+
+centerlog:-
+    nlp_error,
+    centerlog.
 
 /*
 Nombre: centerlog2
@@ -228,9 +290,9 @@ Descripcion: Espera que el usuario agradezca o se despida al terminar de hacerle
 */
 finallog:-
     write("Usuario:           "),
-    leer_entrada(Entrada),
-    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
-    downcase_atom(EntradaSinPuntuacion, Frase),
+    leer_entrada,
+    revisar_entrada,
+    entrada_usuario(Frase),
     despedida(Frase), !,
     write("CallCenterLog:     Estoy para servirle, hasta pronto."),
     retractall(entrada_usuario(_)).
@@ -317,19 +379,20 @@ diagnostico([P|R1], [_|R2], [_|R3]):-
     retractall(entrada_usuario(_)),
     write("CallCenterLog:     "), write(P), write("\n"),
     write("Usuario:           "),
-    leer_entrada(Entrada),
-    quitar_puntuacion(Entrada, EntradaSinPuntuacion),
-    downcase_atom(EntradaSinPuntuacion, Frase),
-    asserta(entrada_usuario(Frase)),
+    leer_entrada,
+    revisar_entrada,
+    entrada_usuario(Frase),
     afirmacion(Frase), !,
     diagnostico(R1, R2, R3).
 
 diagnostico(_, [S|_], [""|_]):-
+    revisar_entrada,
     entrada_usuario(Frase),
     negacion(Frase), !,
     write("CallCenterLog:     "), write(S), write("\n").
 
 diagnostico(_, [S|_], [R|_]):-
+    revisar_entrada,
     entrada_usuario(Frase),
     negacion(Frase), !,
     write("CallCenterLog:     "), write(S), write("\n"),
