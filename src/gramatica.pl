@@ -29,7 +29,6 @@ es_pronombre(como, _, singular).
 es_pronombre(donde, _, singular).
 es_pronombre(cuando, _, singular).
 
-
 % Adverbios
 adverbio(G, N) --> [P], {es_adverbio(P, G, N)}.
 es_adverbio(si, _, _).
@@ -249,6 +248,13 @@ interjeccion --> [mhm].
 
 vacio(_) --> [].
 
+/*
+Nombre: saludo
+Descripcion: Busca si la entrada del usuario tiene alguna expresion reconocida como saludo
+
+saludo(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hola").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hi").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "hey").
@@ -265,6 +271,13 @@ saludo(Oracion) :- sub_atom(Oracion, _, _, _, "permiso").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "que tal").
 saludo(Oracion) :- sub_atom(Oracion, _, _, _, "todo bien").
 
+/*
+Nombre: afirmacion
+Descripcion: Busca si la entrada del usuario tiene alguna expresion reconocida como afirmacion
+
+afirmacion(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "oks").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "si").
@@ -280,6 +293,13 @@ afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "mjm").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "mhm").
 afirmacion(Oracion) :- sub_atom(Oracion, _, _, _, "me parece que si").
 
+/*
+Nombre: negacion
+Descripcion: Busca si la entrada del usuario tiene alguna expresion reconocida como negacion
+
+negacion(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "no").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "nop").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "negativo").
@@ -294,6 +314,13 @@ negacion(Oracion) :- sub_atom(Oracion, _, _, _, "quizas").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "quiza").
 negacion(Oracion) :- sub_atom(Oracion, _, _, _, "puede ser").
 
+/*
+Nombre: pregunta
+Descripcion: Busca si la entrada del usuario contiene alguna palabra o expresion de pregunta
+
+pregunta(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cual").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuales").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "sabe cual").
@@ -310,6 +337,13 @@ pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuanta").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuantos").
 pregunta(Oracion) :- sub_atom(Oracion, _, _, _, "cuantas").
 
+/*
+Nombre: causa
+Descripcion: Busca si la entrada del usuario contiene la palabra "causas" o algun sinonimo de esta
+
+causa(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causa").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "causas").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "motivo").
@@ -327,6 +361,13 @@ causa(Oracion) :- sub_atom(Oracion, _, _, _, "justificaciones").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "principio").
 causa(Oracion) :- sub_atom(Oracion, _, _, _, "principios").
 
+/*
+Nombre: enlace
+Descripcion: Busca si la entrada del usuario contiene la palabra "referencias" o algun sinonimo de esta
+
+enlace(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "referencia").
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "referencias").
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "enlaces").
@@ -334,6 +375,13 @@ enlace(Oracion) :- sub_atom(Oracion, _, _, _, "enlace").
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "links").
 enlace(Oracion) :- sub_atom(Oracion, _, _, _, "link").
 
+/*
+Nombre: despedida
+Descripcion: Busca si la entrada del usuario tiene alguna expresion reconocida como despedida
+
+despedida(Oracion) 
+    *Oracion: Oracion o Frase que ingresa el usuario
+*/
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "ok").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "oka").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "okey").
@@ -348,6 +396,10 @@ despedida(Oracion) :- sub_atom(Oracion, _, _, _, "bye").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "listo gracias").
 
+/*
+Nombre: oracion
+Descripcion: Define la estructura de las oraciones permitidas por la grámatica libre de contexto
+*/
 oracion --> sintagma_nominal(N), sintagma_verbal(N).
 oracion --> interjeccion.
 oracion --> interjeccion, interjeccion.
@@ -359,6 +411,10 @@ oracion --> adverbio(_, _).
 oracion --> adverbio(_, _), adverbio(_, _).
 oracion --> adverbio(_, _), sintagma_nominal(N), sintagma_verbal(N).
 
+/*
+Nombre: sintagma_nominal
+Descripcion: Define las posibles estructuras permitidas de los sintagmas nominales
+*/
 sintagma_nominal(N) --> vacio(N).
 sintagma_nominal(N) --> pronombre(_, N).
 sintagma_nominal(N) --> sustantivo(_, N).
@@ -368,6 +424,10 @@ sintagma_nominal(N) --> preposiciones, sustantivo(_, N).
 sintagma_nominal(N) --> preposiciones, sustantivo(_, N), preposiciones, sustantivo(_, N).
 sintagma_nominal(N) --> determinante(G, N), sustantivo(G, N).
 
+/*
+Nombre: sintagma_verbal
+Descripcion: Define las posibles estructuras permitidas de los sintagmas verbales
+*/
 sintagma_verbal(N) --> verbo(N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N).
 sintagma_verbal(N) --> verbo(N), adjetivo(_, N), conjuncion, adjetivo(_, N).
