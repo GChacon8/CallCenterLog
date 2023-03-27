@@ -87,6 +87,7 @@ es_verbo(tiene, singular).
 es_verbo(tenemos, plural).
 es_verbo(tienen, plural).
 es_verbo(imprimir, _).
+es_verbo(impresion, _).
 es_verbo(veo, singular).
 es_verbo(noto, singular).
 es_verbo(ven, plural).
@@ -104,6 +105,13 @@ es_verbo(leo, singular).
 es_verbo(lee, singular).
 es_verbo(leemos, plural).
 es_verbo(leen, plural).
+es_verbo(clic, _).
+es_verbo(click, _).
+es_verbo(clicker, _).
+es_verbo(teclear, _).
+es_verbo(digitar, _).
+es_verbo(escribir, _).
+es_verbo(escribe, singular).
 
 % Sustantivos
 sustantivo(G, N) --> [P], {es_sustantivo(P, G, N)}.
@@ -117,7 +125,49 @@ es_sustantivo(computadoras, femenino, plural).
 es_sustantivo(impresora, femenino, singular).
 es_sustantivo(impresoras, femenino, plural).
 es_sustantivo(mouse, masculino, singular).
+es_sustantivo(raton, masculino, singular).
+es_sustantivo(puntero, masculino, singular).
 es_sustantivo(teclado, masculino, singular).
+es_sustantivo(teclados, masculino, plural).
+es_sustantivo(keyboard, masculino, singular).
+es_sustantivo(tecladito, masculino, singular).
+es_sustantivo(tecladote, masculino, singular).
+es_sustantivo(audifono, masculino, singular).
+es_sustantivo(audifonos, masculino, plural).
+es_sustantivo(auricular, masculino, singular).
+es_sustantivo(auriculares, masculino, plural).
+es_sustantivo(headphone, masculino, singular).
+es_sustantivo(headphones, masculino, plural).
+es_sustantivo(headset, masculino, singular).
+es_sustantivo(headsets, masculino, plural).
+es_sustantivo(casco, masculino, singular).
+es_sustantivo(cascos, masculino, plural).
+es_sustantivo(parlante, masculino, singular).
+es_sustantivo(parlantes, masculino, plural).
+es_sustantivo(speaker, masculino, singular).
+es_sustantivo(speakers, masculino, plural).
+es_sustantivo(altoparlante, masculino, singular).
+es_sustantivo(altoparlantes, masculino, plural).
+es_sustantivo(bocina, masculino, singular).
+es_sustantivo(bocinas, masculino, plural).
+es_sustantivo(altavoz, masculino, singular).
+es_sustantivo(altavoces, masculino, plural).
+es_sustantivo(monitor, masculino, singular).
+es_sustantivo(monitores, masculino, plural).
+es_sustantivo(pantalla, masculino, singular).
+es_sustantivo(pantallas, masculino, plural).
+es_sustantivo(display, masculino, singular).
+es_sustantivo(displays, masculino, plural).
+es_sustantivo(office, _, _).
+es_sustantivo(word, _, _).
+es_sustantivo(excel, _, _).
+es_sustantivo(powerpoint, _, _).
+es_sustantivo(presentacion, _, _).
+es_sustantivo(wifi, _, _).
+es_sustantivo(internet, masculino, singular).
+es_sustantivo(router, masculino, singular).
+es_sustantivo(modem, masculino, singular).
+es_sustantivo(conexion, femenino, singular).
 es_sustantivo(vpn, femenino, singular).
 es_sustantivo(vpns, femenino, plural).
 es_sustantivo(callcenterlog, _, singular).
@@ -390,6 +440,7 @@ despedida(Oracion) :- sub_atom(Oracion, _, _, _, "okis").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "muchas gracias").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "muchisimas gracias").
+despedida(Oracion) :- sub_atom(Oracion, _, _, _, "de acuerdo").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "adios").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "hasta luego").
 despedida(Oracion) :- sub_atom(Oracion, _, _, _, "bye").

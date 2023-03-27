@@ -4,6 +4,11 @@
 :-dynamic entrada_usuario/1.
 :-dynamic version_estandar/1.
 
+/*
+Nombre: test
+Descripcion: Se utiliza para probar que oraciones reconoce el programa segun la estructura definida
+             en la gramatica y los elementos que la conforman
+*/
 test:-
     retractall(entrada_usuario(_)),
     write("Usuario:           "),
